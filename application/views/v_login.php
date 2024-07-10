@@ -83,12 +83,12 @@
                             Maaf! Username & Password Salah
                             <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
                           </div>";
-                  }else if($_GET['alert']=="belum_login"){
+                  }elseif($_GET['alert']=="belum_login"){
                     echo "<div class='alert alert-danger alert-dismissible' role='alert'>
                             Anda Harus Login Terlebih Dahulu!
                             <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
                           </div>";
-                  }else if($_GET['alert']=="logout"){
+                  }elseif($_GET['alert']=="logout"){
                     echo "<div class='alert alert-success alert-dismissible' role='alert'>
                             Anda Telah Logout!
                             <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
