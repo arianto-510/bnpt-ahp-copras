@@ -1,0 +1,53 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /path/to/your/app
+
+    # Remapping the application root index.php file
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)$ index.php/$1 [L]
+
+    # Disabling directory browsing
+    Options -Indexes
+
+    # Redirecting HTTP to HTTPS
+    RewriteCond %{HTTPS} off
+    RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+    # Setting cache headers
+    <IfModule mod_expires.c>
+        ExpiresActive On
+        ExpiresDefault "access plus 1 month"
+        ExpiresByType text/html "access plus 1 minute"
+        ExpiresByType image/gif "access plus 1 month"
+        ExpiresByType image/jpeg "access plus 1 month"
+        ExpiresByType image/png "access plus 1 month"
+        ExpiresByType text/css "access plus 1 month"
+        ExpiresByType text/javascript "access plus 1 month"
+        ExpiresByType application/javascript "access plus 1 month"
+        ExpiresByType application/x-javascript "access plus 1 month"
+    </IfModule>
+
+    # Preventing access to hidden files
+    <FilesMatch "^\.">
+        Order allow,deny
+        Deny from all
+    </FilesMatch>
+
+    # Preventing access to specific files and folders
+    <FilesMatch "(^composer\.json|^composer\.lock|^phpunit\.xml|^env|^.*\.ini|^.*\.sh|^.*\.bak|^.*\.sql)$">
+        Order allow,deny
+        Deny from all
+    </FilesMatch>
+
+    <IfModule mod_headers.c>
+        # Disabling ETag
+        Header unset ETag
+        FileETag None
+
+        # Adding security headers
+        Header set X-Content-Type-Options "nosniff"
+        Header set X-Frame-Options "DENY"
+        Header set X-XSS-Protection "1; mode=block"
+    </IfModule>
+</IfModule>
