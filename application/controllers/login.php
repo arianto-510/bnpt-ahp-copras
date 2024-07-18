@@ -55,14 +55,14 @@ class Login extends CI_Controller {
                 'username'  => $username,
                 'password'  => $password
             );
-            $data = $this->m_data->cek_login('pengguna',$where)->row();
+            $data = $this->M_data->cek_login('petugas',$where)->row();
             $data_session = array(
                 'id'        => $data->id_petugas,
                 'nama'      => $data->nama,
                 'status'    => 'telah_login'
             );
             $this->session->set_userdata($data_session);
-            redirect(base_url().'dashboard')
+            redirect(base_url().'dashboard');
         }else{
             redirect(base_url().'login/login_admin?alert=gagal');
         }
