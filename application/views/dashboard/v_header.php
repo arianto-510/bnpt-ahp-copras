@@ -12,6 +12,7 @@
       href="" href="<?php echo base_url(); ?>assets/admin/assets/img/kaiadmin/favicon.ico"
       type="image/x-icon"
     />
+    <script src="<?php echo base_url(); ?>assets/admin/assets/js/core/jquery-3.7.1.min.js"></script>
 
     <!-- Fonts and icons -->
     <script src="" href="<?php echo base_url(); ?>assets/admin/assets/js/plugin/webfont/webfont.min.js"></script>
@@ -98,7 +99,13 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a data-bs-toggle="collapse" href="#sidebarLayouts">
+                <a href="<?php echo base_url().'dashboard/data_kriteria' ?>">
+                  <i class="fas fa-th-list"></i>
+                  <p>Data Kriteria</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="<?php echo base_url().'dashboard/data_penilaian' ?>">
                   <i class="fas fa-th-list"></i>
                   <p>Data Penilaian</p>
                 </a>
@@ -165,7 +172,7 @@
             class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom"
           >
             <div class="container-fluid">
-              
+            <h2 align='center'>SPK PENERIMA PBNT</h2>
 
               <ul class="navbar-nav topbar-nav ms-md-auto align-items-center">
                 
