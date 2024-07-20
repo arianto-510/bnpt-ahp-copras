@@ -7,7 +7,9 @@ class Dashboard extends CI_Controller {
         parent::__construct();
         $this->load->model('m_data');
 
-    // //     // function login nanti disini
+        if($this->session->userdata('status')!="telah_login"){
+            redirect(base_url().'login?alert=belum_login');
+        }
     }
 
     public function index()
@@ -110,7 +112,9 @@ class Dashboard extends CI_Controller {
     public function data_kriteria()
     {
         $this->load->model('m_data');
-        $data['kriteria'] = $this->db->query("SELECT * FROM kriteria WHERE id_kriteria")->result();
+        $data['kriteria'] = $this->db->query("SELECT * FROM kriteria")->result();
+        $data['jumlah_kriteria'] = $this->db->query("SELECT * FROM kriteria")->num_rows();
+
         $this->load->view('dashboard/v_header');
         $this->load->view('dashboard/v_data_kriteria', $data);
         $this->load->view('dashboard/v_footer');
@@ -120,27 +124,20 @@ class Dashboard extends CI_Controller {
     public function tambah_kriteria()
                 {
                     $this->load->model('m_data');
-
-                    $this->form_validation->set_rules('kode','Kode','required');
                     $this->form_validation->set_rules('nama','Nama','required');
-                    $this->form_validation->set_rules('bobot','Bobot','required');
-                    $this->form_validation->set_rules('rengking','Rengking','required');
                         if($this->form_validation->run() != false){
-                            $kode = $this->input->post('kode');
                             $nama = $this->input->post('nama');
-                            $nilai = $this->input->post('bobot');
-                            // $rengking = $this->input->post('rengking');
                             $data = array(
-                                'kode_kriteria' => $kode,
-                                'nama_kriteria' => $nama,
-                                'nilai' => $nilai,
-                                // 'rengking' => $rengking
+                                'nama_kriteria' => $nama
                              );
                             $this->m_data->insert_data($data,'kriteria');
                                 redirect(base_url().'dashboard/data_kriteria');
                         }else{
+                            $this->load->model('m_data');
+                            $data['kriteria'] = $this->db->query("SELECT * FROM kriteria")->result();
+
                             $this->load->view('dashboard/v_header');
-                            $this->load->view('dashboard/v_data_kriteria');
+                            $this->load->view('dashboard/v_data_kriteria',$data);
                             $this->load->view('dashboard/v_footer');
                         }
                 }
@@ -183,10 +180,7 @@ class Dashboard extends CI_Controller {
         $table = 'kriteria'; // Tentukan nama tabel di sini atau buat dinamis
         $id_field = 'id_kriteria'; // Tentukan nama field id di sini atau buat dinamis
         $data = array(
-            'kode_kriteria' => $this->input->post('kode'),
             'nama_kriteria' => $this->input->post('nama'),
-            'nilai' => $this->input->post('bobot'),
-            // 'rengking' => $this->input->post('rengking')
         );
         $this->m_data->update_record($table, $id_field, $id, $data);
         redirect('dashboard/data_kriteria');
@@ -208,5 +202,10 @@ class Dashboard extends CI_Controller {
         $this->load->view('dashboard/v_header');
         $this->load->view('dashboard/v_data_penilaian', $data);
         $this->load->view('dashboard/v_footer');
+    }
+
+    public function logout(){
+        $this->session->sess_destroy();
+        redirect('login?alert=logout');
     }
 }
