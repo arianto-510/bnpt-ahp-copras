@@ -11,8 +11,8 @@ class Login extends CI_Controller {
         $telepon    = $this->input->post('telepon');
 
         $where = array(
-            'nik'       => $username,
-            'telepon'   => $password
+            'nik'       => $nik,
+            'telepon'   => $telepon
         );
 
         $this->load->model('M_data');

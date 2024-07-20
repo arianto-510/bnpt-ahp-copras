@@ -14,6 +14,26 @@
                         </div>
                     </div>
                     <div class="card-body">
+                    <?php
+                        if(isset($_GET['alert'])){
+                        if($_GET['alert']=="sudah_ada"){
+                            echo "<div class='alert alert-danger alert-dismissible' role='alert'>
+                                    Maaf! Username, Sudah ada !
+                                    <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+                                </div>";
+                        }elseif($_GET['alert']=="belum_login"){
+                            echo "<div class='alert alert-danger alert-dismissible' role='alert'>
+                                    Anda Harus Login Terlebih Dahulu!
+                                    <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+                                </div>";
+                        }elseif($_GET['alert']=="logout"){
+                            echo "<div class='alert alert-success alert-dismissible' role='alert'>
+                                    Anda Telah Logout!
+                                    <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+                                </div>";
+                        }
+                        }
+                    ?>
                         <!-- Modal tambah kriteria-->
                         <div class="modal fade" id="addRowModal" tabindex="-1" role="dialog" aria-hidden="true">
                             <div class="modal-dialog" role="document">
@@ -28,30 +48,18 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <form action="<?php echo base_url('dashboard/tambah_petugas') ?>" method="post">
+                                        <form action="<?php echo base_url('user/tambah_petugas') ?>" method="post">
                                             <div class="row">
                                                 <div class="col-sm-12">
                                                     <div class="form-group form-group-default">
-                                                        <label>Kode Kriteria</label>
-                                                        <input name="kode" id="addKode" type="text" class="form-control" placeholder="Contoh C1, C2, dst.." required />
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-12">
-                                                    <div class="form-group form-group-default">
-                                                        <label>Nama Kriteria</label>
+                                                        <label>Nama</label>
                                                         <input name="nama" id="addNama" type="text" class="form-control" placeholder="Masukkan nilai bobot" required />
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-12">
                                                     <div class="form-group form-group-default">
-                                                        <label>Bobot</label>
-                                                        <input name="bobot" id="addBobot" type="text" class="form-control" placeholder="Masukkan nilai bobot" required />
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-12">
-                                                    <div class="form-group form-group-default">
-                                                        <label>Rengking</label>
-                                                        <input name="rengking" id="addRengking" type="text" class="form-control" placeholder="Masukkan rengking" required />
+                                                        <label>Username</label>
+                                                        <input name="username" id="addUsername" type="text" class="form-control" placeholder="Masukkan nilai username" required />
                                                     </div>
                                                 </div>
                                             </div>
@@ -120,8 +128,6 @@
                                 <tr>
                                     <th scope="col">No</th>
                                     <th scope="col">Nama</th>
-                                    <th scope="col">Bobot</th>
-                                    <th scope="col">Rengking</th>
                                     <th style="width: 10%">Aksi</th>
                                 </tr>
                             </thead>
@@ -132,14 +138,11 @@
                                 ?>
                                 <tr>
                                     <td><?php echo $no++; ?></td>
-                                    <td><?php echo $p->kode_kriteria; ?></td>
-                                    <td><?php echo $k->nama_kriteria; ?></td>
-                                    <td><?php echo $k->nilai; ?></td>
-                                    <td>Rengking</td>
+                                    <td><?php echo $p->nama; ?></td>
                                     <td>
                                         <div class="form-button-action">
-                                            <button class="btn btn-warning btn-edit" data-id="<?php echo $k->id_kriteria; ?>" data-bs-toggle="modal" data-bs-target="#editRowModal">Edit</button>
-                                            <a href="<?php echo base_url().'dashboard/kriteria_hapus/'.$k->id_kriteria; ?>"><button class="btn btn-danger">Hapus</button></a>
+                                            <button class="btn btn-warning btn-edit" data-id="<?php echo $p->id_petugas; ?>" data-bs-toggle="modal" data-bs-target="#editRowModal">Edit</button>
+                                            <a href="<?php echo base_url().'dashboard/petugas_hapus/'.$p->id_petugas; ?>"><button class="btn btn-danger">Hapus</button></a>
                                         </div>
                                     </td>
                                 </tr>
