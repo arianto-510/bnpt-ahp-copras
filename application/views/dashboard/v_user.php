@@ -28,7 +28,7 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <form action="<?php echo base_url('dashboard/tambah_kriteria') ?>" method="post">
+                                        <form action="<?php echo base_url('dashboard/tambah_petugas') ?>" method="post">
                                             <div class="row">
                                                 <div class="col-sm-12">
                                                     <div class="form-group form-group-default">
@@ -119,8 +119,7 @@
                             <thead>
                                 <tr>
                                     <th scope="col">No</th>
-                                    <th scope="col">Kode Kriteria</th>
-                                    <th scope="col">Nama Kriteria</th>
+                                    <th scope="col">Nama</th>
                                     <th scope="col">Bobot</th>
                                     <th scope="col">Rengking</th>
                                     <th style="width: 10%">Aksi</th>
@@ -129,11 +128,11 @@
                             <tbody>
                                 <?php 
                                     $no = 1;
-                                    foreach($kriteria as $k){ 
+                                    foreach($petugas as $p){ 
                                 ?>
                                 <tr>
                                     <td><?php echo $no++; ?></td>
-                                    <td><?php echo $k->kode_kriteria; ?></td>
+                                    <td><?php echo $p->kode_kriteria; ?></td>
                                     <td><?php echo $k->nama_kriteria; ?></td>
                                     <td><?php echo $k->nilai; ?></td>
                                     <td>Rengking</td>

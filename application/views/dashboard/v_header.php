@@ -129,7 +129,7 @@
                 <h4 class="text-section">MASTER USER</h4>
               </li>
               <li class="nav-item">
-                <a data-bs-toggle="collapse" href="<?php echo base_url().'user' ?>">
+                <a href="<?php echo base_url().'user' ?>">
                   <i class="fas fa-map-marker-alt"></i>
                   <p>Data User</p>
                 </a>
