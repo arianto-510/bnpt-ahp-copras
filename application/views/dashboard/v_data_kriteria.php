@@ -2,7 +2,7 @@
     <div class="page-inner">
         <div class="row">
             <div class="col-md-12 mb-3">
-                
+                <form action="<?php echo base_url().'dashboard/kalkulasi'; ?>" method="post"></form>
                         <table class="table table-striped mt-3">
                             <thead>
                                 <tr>
@@ -21,7 +21,7 @@
                                 <?php endforeach; ?> 
                             </tbody>
                         </table>
-
+                </form>
             </div>
         </div>
         <div class="page-header">

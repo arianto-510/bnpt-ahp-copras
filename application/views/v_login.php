@@ -97,7 +97,7 @@
                 }
               ?>
 
-              <form id="formAuthentication" class="mb-3" action="<?php echo base_url().'login/login_aksi' ?>" method="post">
+              <form id="formAuthentication" class="mb-3" action="<?php echo base_url().'login/cek_penerimaan_bpnt' ?>" method="post">
                 <div class="mb-3">
                   <label for="nik" class="form-label">NIK</label>
                   <input
@@ -125,7 +125,7 @@
                 </div>
                 
                 <div class="mb-3">
-                  <input type="submit" class="btn btn-primary d-grid w-100" type="submit" value="Login">
+                  <input type="submit" class="btn btn-primary d-grid w-100" type="submit" value="Pengumuman">
                 </div>
               </form>
 

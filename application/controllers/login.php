@@ -6,7 +6,7 @@ class Login extends CI_Controller {
         $this->load->view('v_login');
     }
 
-    public function login_aksi(){
+    public function cek_penerimaan_bpnt(){
         $nik        = $this->input->post('nik');
         $telepon    = $this->input->post('telepon');
 
@@ -19,20 +19,22 @@ class Login extends CI_Controller {
         $cek = $this->M_data->cek_login('alternatif', $where)->num_rows();
         if($cek > 0){
             $data = $this->db->query("SELECT * FROM alternatif WHERE nik = '$nik' AND telepon = '$telepon'")->row();
-            $data_session = array(
-                'id'        => $data->id_alternatif,
-                'nama'      => $data->nama,
-                'nik'       => $data->nik,
-                'telepeon'  => $data->telepon,
-                'jk'        => $data->jenis_kelamin,
-                'alamat'    => $data->alamat,
-                'status'    => 'telah_login'
-            );
-            $this->session->set_userdata($data_session);
-            redirect(base_url().'dashboard');
+            $status = 'masuk';
+            $this->hasil($data->nik,$status);
+            // redirect(base_url().'login/cek_penerimaan_bpnt/'.$data->nik);
         }else{
             redirect(base_url().'login?alert=gagal');
         }
+    }
+
+    private function hasil($nik,$status){
+        if($status == null){
+            redirect(base_url('login'));
+            return;
+        }
+
+        $data['pengumuman'] = $this->db->query("SELECT * FROM alternatif WHERE nik = '$nik'")->row();
+        $this->load->view('v_pengumuman',$data);
     }
 
     public function login_admin(){

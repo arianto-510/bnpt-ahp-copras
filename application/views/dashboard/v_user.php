@@ -16,22 +16,32 @@
                     <div class="card-body">
                     <?php
                         if(isset($_GET['alert'])){
-                        if($_GET['alert']=="sudah_ada"){
-                            echo "<div class='alert alert-danger alert-dismissible' role='alert'>
-                                    Maaf! Username, Sudah ada !
-                                    <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
-                                </div>";
-                        }elseif($_GET['alert']=="belum_login"){
-                            echo "<div class='alert alert-danger alert-dismissible' role='alert'>
-                                    Anda Harus Login Terlebih Dahulu!
-                                    <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
-                                </div>";
-                        }elseif($_GET['alert']=="logout"){
-                            echo "<div class='alert alert-success alert-dismissible' role='alert'>
-                                    Anda Telah Logout!
-                                    <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
-                                </div>";
-                        }
+                            if($_GET['alert']=="sudah_ada"){
+                                echo "<div class='alert alert-danger alert-dismissible' role='alert'>
+                                        Maaf! Username, Sudah ada !
+                                        <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+                                    </div>";
+                            }elseif($_GET['alert']=="username"){
+                                echo "<div class='alert alert-danger alert-dismissible' role='alert'>
+                                        Maaf ! Username sudah ada !
+                                        <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+                                    </div>";
+                            }elseif($_GET['alert']=="tambah"){
+                                echo "<div class='alert alert-success alert-dismissible' role='alert'>
+                                        Berhasl ditambahkan !
+                                        <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+                                    </div>";
+                            }elseif($_GET['alert']=="ubah"){
+                                echo "<div class='alert alert-success alert-dismissible' role='alert'>
+                                        Berhasil diubah!
+                                        <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+                                    </div>";
+                            }elseif($_GET['alert']=="hapus"){
+                                echo "<div class='alert alert-success alert-dismissible' role='alert'>
+                                        Berhasil dihapus!
+                                        <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+                                    </div>";
+                            }
                         }
                     ?>
                         <!-- Modal tambah kriteria-->
@@ -53,13 +63,13 @@
                                                 <div class="col-sm-12">
                                                     <div class="form-group form-group-default">
                                                         <label>Nama</label>
-                                                        <input name="nama" id="addNama" type="text" class="form-control" placeholder="Masukkan nilai bobot" required />
+                                                        <input name="nama" id="addNama" type="text" class="form-control" placeholder="Masukkan nama" required />
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-12">
                                                     <div class="form-group form-group-default">
                                                         <label>Username</label>
-                                                        <input name="username" id="addUsername" type="text" class="form-control" placeholder="Masukkan nilai username" required />
+                                                        <input name="username" id="addUsername" type="text" class="form-control" placeholder="Masukkan username" required />
                                                     </div>
                                                 </div>
                                             </div>
@@ -86,32 +96,21 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <form action="<?php echo base_url('dashboard/update_kriteria') ?>" method="post">
-                                            <input type="hidden" name="id_kriteria" id="editIdKriteria">
+                                        <form action="<?php echo base_url('user/update_petugas') ?>" method="post">
+                                            <input type="hidden" name="id_petugas" id="editPetugas">
+                                            <input type="hidden" name="username_lama" id="editUsernameLama">
                                             <div class="row">
                                                 <div class="col-sm-12">
-                                                    <div class="form-group form-group-default">
-                                                        <label>Kode Kriteria</label>
-                                                        <input name="kode" id="editKode" type="text" class="form-control" required />
-                                                    </div>
+                                                        <div class="form-group form-group-default">
+                                                            <label>Nama</label>
+                                                            <input name="nama" id="editNama" type="text" class="form-control" required />
+                                                        </div>
                                                 </div>
                                                 <div class="col-sm-12">
-                                                    <div class="form-group form-group-default">
-                                                        <label>Nama Kriteria</label>
-                                                        <input name="nama" id="editNama" type="text" class="form-control" required />
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-12">
-                                                    <div class="form-group form-group-default">
-                                                        <label>Bobot</label>
-                                                        <input name="bobot" id="editBobot" type="text" class="form-control" required />
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-12">
-                                                    <div class="form-group form-group-default">
-                                                        <label>Rengking</label>
-                                                        <input name="rengking" id="editRengking" type="text" class="form-control" required />
-                                                    </div>
+                                                        <div class="form-group form-group-default">
+                                                            <label>Username</label>
+                                                            <input name="username" id="editUsername" type="text" class="form-control" required />
+                                                        </div>
                                                 </div>
                                             </div>
                                             <div class="modal-footer border-0">
@@ -142,7 +141,7 @@
                                     <td>
                                         <div class="form-button-action">
                                             <button class="btn btn-warning btn-edit" data-id="<?php echo $p->id_petugas; ?>" data-bs-toggle="modal" data-bs-target="#editRowModal">Edit</button>
-                                            <a href="<?php echo base_url().'dashboard/petugas_hapus/'.$p->id_petugas; ?>"><button class="btn btn-danger">Hapus</button></a>
+                                            <a href="<?php echo base_url().'user/petugas_hapus/'.$p->id_petugas; ?>"><button class="btn btn-danger">Hapus</button></a>
                                         </div>
                                     </td>
                                 </tr>
@@ -155,15 +154,17 @@
         </div>
     </div>
 </div>
+
+
 <script>
 $(document).ready(function(){
     $('.btn-edit').on('click', function(){
         var id = $(this).data('id');
         
         $.ajax({
-            url: '<?php echo base_url('dashboard/get_kriteria') ?>',
+            url: '<?php echo base_url('user/get_petugas') ?>',
             method: 'POST',
-            data: {id_kriteria: id},
+            data: {id_petugas: id},
             dataType: 'json',
             success: function(data){
                 console.log(data); // Tambahkan ini untuk debugging
@@ -172,11 +173,10 @@ $(document).ready(function(){
                 if (data.error) {
                     alert(data.error);
                 } else {
-                    $('#editIdKriteria').val(data.id_kriteria);
-                    $('#editKode').val(data.kode_kriteria);
-                    $('#editNama').val(data.nama_kriteria);
-                    $('#editBobot').val(data.nilai);
-                    $('#editRengking').val(data.rengking);
+                    $('#editPetugas').val(data.id_petugas);
+                    $('#editNama').val(data.nama);
+                    $('#editUsernameLama').val(data.username);
+                    $('#editUsername').val(data.username);
                 }
             },
             error: function(xhr, status, error) {
