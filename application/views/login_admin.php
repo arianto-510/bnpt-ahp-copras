@@ -32,7 +32,7 @@
     <meta name="description" content="" />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="<?php echo base_url()?>assets_2/assets/img/favicon/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="<?php echo base_url() ?>assets_2/assets/img/favicon/favicon.ico" />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -77,27 +77,27 @@
               <h4 class="mb-6">Login Admin</h4>
 
               <?php
-                if(isset($_GET['alert'])){
-                  if($_GET['alert']=="gagal"){
-                    echo "<div class='alert alert-danger alert-dismissible' role='alert'>
+              if (isset($_GET['alert'])) {
+                if ($_GET['alert'] == "gagal") {
+                  echo "<div class='alert alert-danger alert-dismissible' role='alert'>
                             Maaf! Username & Password Salah
                             <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
                           </div>";
-                  }elseif($_GET['alert']=="belum_login"){
-                    echo "<div class='alert alert-danger alert-dismissible' role='alert'>
+                } elseif ($_GET['alert'] == "belum_login") {
+                  echo "<div class='alert alert-danger alert-dismissible' role='alert'>
                             Anda Harus Login Terlebih Dahulu!
                             <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
                           </div>";
-                  }elseif($_GET['alert']=="logout"){
-                    echo "<div class='alert alert-success alert-dismissible' role='alert'>
+                } elseif ($_GET['alert'] == "logout") {
+                  echo "<div class='alert alert-success alert-dismissible' role='alert'>
                             Anda Telah Logout!
                             <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
                           </div>";
-                  }
                 }
+              }
               ?>
 
-              <form id="formAuthentication" class="mb-3" action="<?php echo base_url().'login/login_admin_aksi' ?>" method="post">
+              <form id="formAuthentication" class="mb-3" action="<?php echo base_url() . 'login/login_admin_aksi' ?>" method="post">
                 <div class="mb-3">
                   <label for="username" class="form-label">Username</label>
                   <input
@@ -113,9 +113,9 @@
                 <div class="mb-3 form-password-toggle">
                   <div class="d-flex justify-content-between">
                     <label class="form-label" for="password">Password</label>
-                    <a href="">
+                    <!-- <a href="">
                       <small>Lupa Password?</small>
-                    </a>
+                    </a> -->
                   </div>
                   <div class="input-group input-group-merge">
                     <input
@@ -136,7 +136,7 @@
               </form>
 
               <p class="text-center">
-                <a href="<?php echo base_url().'login'; ?>">
+                <a href="<?php echo base_url() . 'login'; ?>">
                   <span>Login sebagai Masyarakat</span>
                 </a>
               </p>

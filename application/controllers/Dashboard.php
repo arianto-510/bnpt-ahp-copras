@@ -1,14 +1,15 @@
 <?php
-defined('BASEPATH') OR exit('No direc access allowed');
+defined('BASEPATH') or exit('No direc access allowed');
 
-class Dashboard extends CI_Controller {
+class Dashboard extends CI_Controller
+{
     function __construct()
     {
         parent::__construct();
         $this->load->model('m_data');
 
-        if($this->session->userdata('status')!="telah_login"){
-            redirect(base_url().'login?alert=belum_login');
+        if ($this->session->userdata('status') != "telah_login") {
+            redirect(base_url() . 'login?alert=belum_login');
         }
     }
 
@@ -31,56 +32,57 @@ class Dashboard extends CI_Controller {
 
     // tambah data alternatif
     public function tambah_alternatif()
-                {
-                    $this->load->model('m_data');
+    {
+        $this->load->model('m_data');
 
-                    $this->form_validation->set_rules('nama','Nama','required');
-                    $this->form_validation->set_rules('nik','Nik','required');
-                    $this->form_validation->set_rules('telepon','Telepon','required');
-                    $this->form_validation->set_rules('jk','Jk','required');
-                    $this->form_validation->set_rules('alamat','Alamat','required');
-                        if($this->form_validation->run() != false){
-                            $nama = $this->input->post('nama');
-                            $nik = $this->input->post('nik');
-                            $telepon = $this->input->post('telepon');
-                            $jk = $this->input->post('jk');
-                            $alamat = $this->input->post('alamat');
-                            $data = array(
-                                'nama' => $nama,
-                                'nik' => $nik,
-                                'telepon' => $telepon,
-                                'jenis_kelamin' => $jk,
-                                'alamat' => $alamat
-                             );
-                            $this->m_data->insert_data($data,'alternatif');
-                                redirect(base_url().'dashboard/data_alternatif');
-                        }else{
-                            $this->load->view('dashboard/v_header');
-                            $this->load->view('dashboard/v_data_alternatif');
-                            $this->load->view('dashboard/v_footer');
-                        }
-                }
-    
+        $this->form_validation->set_rules('nama', 'Nama', 'required');
+        $this->form_validation->set_rules('nik', 'Nik', 'required');
+        $this->form_validation->set_rules('telepon', 'Telepon', 'required');
+        $this->form_validation->set_rules('jk', 'Jk', 'required');
+        $this->form_validation->set_rules('alamat', 'Alamat', 'required');
+        if ($this->form_validation->run() != false) {
+            $nama = $this->input->post('nama');
+            $nik = $this->input->post('nik');
+            $telepon = $this->input->post('telepon');
+            $jk = $this->input->post('jk');
+            $alamat = $this->input->post('alamat');
+            $data = array(
+                'nama' => $nama,
+                'nik' => $nik,
+                'telepon' => $telepon,
+                'jenis_kelamin' => $jk,
+                'alamat' => $alamat
+            );
+            $this->m_data->insert_data($data, 'alternatif');
+            redirect(base_url() . 'dashboard/data_alternatif');
+        } else {
+            $this->load->view('dashboard/v_header');
+            $this->load->view('dashboard/v_data_alternatif');
+            $this->load->view('dashboard/v_footer');
+        }
+    }
+
     // hapus data alternatif
     public function alternatif_hapus($id)
-                        {
-                            $this->load->model('m_data');
-                        $where = array(
-                        'id_alternatif' => $id
-                        );
-                        $this->m_data->delete_data($where,'alternatif');
-                        redirect('dashboard/data_alternatif');
-                        }
+    {
+        $this->load->model('m_data');
+        $where = array(
+            'id_alternatif' => $id
+        );
+        $this->m_data->delete_data($where, 'alternatif');
+        redirect('dashboard/data_alternatif');
+    }
     // edit alternatif
-    public function get_alternatif() {
+    public function get_alternatif()
+    {
         $id = $this->input->post('id_alternatif');
         $table = 'alternatif'; // Tentukan nama tabel di sini atau buat dinamis
         $id_field = 'id_alternatif'; // Tentukan nama field id di sini atau buat dinamis
-    
+
         log_message('debug', 'ID Alternatif: ' . $id); // Log ID yang diterima
-    
+
         $data = $this->m_data->get_record_by_id($table, $id_field, $id);
-        
+
         // Debugging: Cek apakah data ditemukan
         if ($data) {
             log_message('debug', 'Data ditemukan: ' . json_encode($data));
@@ -90,9 +92,10 @@ class Dashboard extends CI_Controller {
             echo json_encode(array('error' => 'Data tidak ditemukan'));
         }
     }
-    
-    
-    public function update_alternatif() {
+
+
+    public function update_alternatif()
+    {
         $id = $this->input->post('id_alternatif');
         $table = 'alternatif'; // Tentukan nama tabel di sini atau buat dinamis
         $id_field = 'id_alternatif'; // Tentukan nama field id di sini atau buat dinamis
@@ -105,13 +108,28 @@ class Dashboard extends CI_Controller {
         );
         $this->m_data->update_record($table, $id_field, $id, $data);
         redirect('dashboard/data_alternatif');
-
     }
 
     // DATA KRITERIA
     public function data_kriteria()
     {
         $this->load->model('m_data');
+        $matriks = $this->db->query("SELECT * FROM matrix");
+        $arr = [];
+        $baris = 0;
+        $matrix = $matriks->result();
+
+        foreach ($matrix as $m) {
+            $arr[$baris][0] = $m->pendapatan;
+            $arr[$baris][1] = $m->tanggungan;
+            $arr[$baris][2] = $m->pendidikan;
+            $arr[$baris][3] = $m->pekerjaan;
+            $baris++;
+        }
+
+        $data['arr'] = $arr;
+        $data['matrix'] = $matrix;
+
         $data['kriteria'] = $this->db->query("SELECT * FROM kriteria")->result();
         $data['jumlah_kriteria'] = $this->db->query("SELECT * FROM kriteria")->num_rows();
 
@@ -120,50 +138,52 @@ class Dashboard extends CI_Controller {
         $this->load->view('dashboard/v_footer');
     }
 
+
     // tambah data kriteria
     public function tambah_kriteria()
-                {
-                    $this->load->model('m_data');
-                    $this->form_validation->set_rules('nama','Nama','required');
-                        if($this->form_validation->run() != false){
-                            $nama = $this->input->post('nama');
-                            $data = array(
-                                'nama_kriteria' => $nama
-                             );
-                            $this->m_data->insert_data($data,'kriteria');
-                                redirect(base_url().'dashboard/data_kriteria');
-                        }else{
-                            $this->load->model('m_data');
-                            $data['kriteria'] = $this->db->query("SELECT * FROM kriteria")->result();
+    {
+        $this->load->model('m_data');
+        $this->form_validation->set_rules('nama', 'Nama', 'required');
+        if ($this->form_validation->run() != false) {
+            $nama = $this->input->post('nama');
+            $data = array(
+                'nama_kriteria' => $nama
+            );
+            $this->m_data->insert_data($data, 'kriteria');
+            redirect(base_url() . 'dashboard/data_kriteria');
+        } else {
+            $this->load->model('m_data');
+            $data['kriteria'] = $this->db->query("SELECT * FROM kriteria")->result();
 
-                            $this->load->view('dashboard/v_header');
-                            $this->load->view('dashboard/v_data_kriteria',$data);
-                            $this->load->view('dashboard/v_footer');
-                        }
-                }
+            $this->load->view('dashboard/v_header');
+            $this->load->view('dashboard/v_data_kriteria', $data);
+            $this->load->view('dashboard/v_footer');
+        }
+    }
 
     // hapus kriteria
     public function kriteria_hapus($id)
-                        {
-                            $this->load->model('m_data');
-                        $where = array(
-                        'id_kriteria' => $id
-                        );
-                        $this->m_data->delete_data($where,'kriteria');
-                        redirect('dashboard/data_kriteria');
-                        }
+    {
+        $this->load->model('m_data');
+        $where = array(
+            'id_kriteria' => $id
+        );
+        $this->m_data->delete_data($where, 'kriteria');
+        redirect('dashboard/data_kriteria');
+    }
 
 
     // edit kriteria
-    public function get_kriteria() {
+    public function get_kriteria()
+    {
         $id = $this->input->post('id_kriteria');
         $table = 'kriteria'; // Tentukan nama tabel di sini atau buat dinamis
         $id_field = 'id_kriteria'; // Tentukan nama field id di sini atau buat dinamis
-    
+
         log_message('debug', 'ID Kriteria: ' . $id); // Log ID yang diterima
-    
+
         $data = $this->m_data->get_record_by_id($table, $id_field, $id);
-        
+
         // Debugging: Cek apakah data ditemukan
         if ($data) {
             log_message('debug', 'Data ditemukan: ' . json_encode($data));
@@ -173,9 +193,10 @@ class Dashboard extends CI_Controller {
             echo json_encode(array('error' => 'Data tidak ditemukan'));
         }
     }
-    
-    
-    public function update_kriteria() {
+
+
+    public function update_kriteria()
+    {
         $id = $this->input->post('id_kriteria');
         $table = 'kriteria'; // Tentukan nama tabel di sini atau buat dinamis
         $id_field = 'id_kriteria'; // Tentukan nama field id di sini atau buat dinamis
@@ -184,28 +205,108 @@ class Dashboard extends CI_Controller {
         );
         $this->m_data->update_record($table, $id_field, $id, $data);
         redirect('dashboard/data_kriteria');
-
     }
-    
-    
-    
+
+
+
+
+
     // DATA PENILAIAN
     public function data_penilaian()
     {
         $this->load->model('m_data');
-        $data['penilaian'] = $this->db->query("
-            SELECT p.id_penilaian, a.nik, a.nama, a.alamat, k.nilai
-            FROM penilaian p
-            JOIN alternatif a ON p.id_alternatif = a.id_alternatif
-            JOIN kriteria k ON p.id_kriteria = k.id_kriteria
+
+        // Mengambil data dari tabel alternatif
+        $data['alternatif'] = $this->db->query("SELECT * FROM alternatif")->result();
+
+        // Mengambil data dari tabel perhitungan dan join dengan tabel alternatif
+        $data['perhitungan'] = $this->db->query("
+            SELECT a.nama, p.pendapatan, p.j_tanggungan, p.pendidikan, p.pekerjaan, a.id_alternatif, p.id
+            FROM alternatif a
+            JOIN perhitungan p ON a.id_alternatif = p.id_alternatif
         ")->result();
+
+
+        // Load views
         $this->load->view('dashboard/v_header');
         $this->load->view('dashboard/v_data_penilaian', $data);
         $this->load->view('dashboard/v_footer');
     }
 
-    public function logout(){
-        $this->session->sess_destroy();
-        redirect('login?alert=logout');
+    public function tambah_penilaian()
+    {
+        $this->load->model('m_data');
+        $this->form_validation->set_rules('nama', 'Nama', 'required');
+        if ($this->form_validation->run() != false) {
+            $nama = $this->input->post('nama');
+            $pendapatan = $this->input->post('pendapatan');
+            $tanggungan = $this->input->post('tanggungan');
+            $pendidikan = $this->input->post('pendidikan');
+            $pekerjaan = $this->input->post('pekerjaan');
+            $data = array(
+                'id_alternatif' => $nama,
+                'pendapatan' => $pendapatan,
+                'j_tanggungan' => $tanggungan,
+                'pendidikan' => $pendidikan,
+                'pekerjaan' => $pekerjaan,
+            );
+            $this->m_data->insert_data($data, 'perhitungan');
+            redirect(base_url() . 'dashboard/data_penilaian');
+        } else {
+            $this->load->model('m_data');
+            $data['perhitungan'] = $this->db->query("SELECT * FROM perhitungan")->result();
+
+            $this->load->view('dashboard/v_header');
+            $this->load->view('dashboard/v_data_penilaian', $data);
+            $this->load->view('dashboard/v_footer');
+        }
+    }
+
+    public function perhitungan_hapus($id)
+    {
+        $this->load->model('m_data');
+        $where = array(
+            'id' => $id
+        );
+        $this->m_data->delete_data($where, 'perhitungan');
+        redirect('dashboard/data_penilaian');
+    }
+
+    public function get_perhitungan()
+    {
+        $id = $this->input->post('id_perhitungan');
+        $table = 'perhitungan';
+        $id_field = 'id';
+
+        $data = $this->m_data->get_record_by_id($table, $id_field, $id);
+
+        if ($data) {
+            // Mengambil nama alternatif berdasarkan id_alternatif
+            $alternatif = $this->db->get_where('alternatif', array('id_alternatif' => $data->id_alternatif))->row();
+            if ($alternatif) {
+                $data->nama = $alternatif->nama; // Menambahkan nama ke data
+            }
+            echo json_encode($data);
+        } else {
+            echo json_encode(array('error' => 'Data tidak ditemukan'));
+        }
+    }
+
+
+
+    public function update_penilaian()
+    {
+        $id = $this->input->post('id_penilaian');
+        $table = 'perhitungan'; // Tentukan nama tabel di sini atau buat dinamis
+        $id_field = 'id'; // Tentukan nama field id di sini atau buat dinamis
+        $data = array(
+            'id_alternatif' => $this->input->post('id_alternatif'),
+            'pendapatan' => $this->input->post('pendapatan'),
+            'j_tanggungan' => $this->input->post('tanggungan'),
+            'pendidikan' => $this->input->post('pendidikan'),
+            'pekerjaan' => $this->input->post('pekerjaan')
+        );
+        $this->m_data->update_record($table, $id_field, $id, $data);
+        redirect('dashboard/data_penilaian');
     }
 }

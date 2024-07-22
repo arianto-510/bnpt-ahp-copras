@@ -2,48 +2,63 @@
     <div class="page-inner">
         <div class="row">
             <div class="col-md-12 mb-3">
-                
-                        <table class="table table-striped mt-3">
-                            <thead>
-                                <tr>
-                                    <?php foreach($kriteria as $k) : ?>
-                                        <th scope="col"><?= $k->nama_kriteria; ?></th>
-                                    <?php endforeach; ?>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php foreach($kriteria as $k) : ?>
-                                    <tr>
-                                        <?php foreach($kriteria as $k) : ?>
-                                            <td scope="col"><input type="number" class="form-control" required></td>
-                                        <?php endforeach; ?> 
-                                    </tr>
-                                <?php endforeach; ?> 
-                            </tbody>
-                        </table>
+                <div class="container">
+                    <div class="page-inner">
+                        <div class="row">
+                            <div class="col-md-12 mb-3">
+                                <form action="<?= base_url() . 'ahpcopras/kalkulasi' ?>" method="post">
+                                    <div class="page-header">
+                                        <h3 class="fw-bold mb-3">Data Bobot</h3>
+                                    </div>
+                                    <table class="table table-striped mt-3">
+                                        <thead>
+                                            <tr>
+                                                <?php foreach ($kriteria as $k) : ?>
+                                                    <th scope="col"><?= $k->nama_kriteria; ?></th>
+                                                <?php endforeach; ?>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php
+                                            $baris = 0;
+                                            foreach ($kriteria as $k) : ?>
+                                                <tr>
+                                                    <?php
+                                                    $kolom = 0;
+                                                    foreach ($kriteria as $k) : ?>
+                                                        <td scope="col"><input type="number" name="matrix[]" class="form-control" required value="<?php echo isset($arr[$baris][$kolom]) ? $arr[$baris][$kolom] : ''; ?>"></td>
+                                                    <?php $kolom++;
+                                                    endforeach; ?>
+                                                </tr>
+                                            <?php $baris++;
+                                            endforeach; ?>
+                                        </tbody>
+                                    </table>
+                                    <button class="btn btn-primary" name="kalkulasi" type="submit">Kalkulasi</button>
+                                </form>
 
-            </div>
-        </div>
-        <div class="page-header">
-            <h3 class="fw-bold mb-3">Data Kriteria</h3>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header">
-                        <div class="d-flex align-items-center">
-                                <?php 
-                                    $jumlah = $jumlah_kriteria + 1;
-                                    if($jumlah <= 4) : 
-                                ?>
-                                <button class="btn btn-primary btn-round ms-auto" data-bs-toggle="modal" data-bs-target="#addRowModal">
-                                    <i class="fa fa-plus"></i> Tambah Kriteria
-                                </button>
+                                <?php if (!empty($weights)) : ?>
+                                    <h3>Hasil Pembobotan AHP</h3>
+                                    <table class="table table-striped mt-3">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Kriteria</th>
+                                                <th scope="col">Bobot</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php foreach ($weights as $index => $weight) : ?>
+                                                <tr>
+                                                    <td><?= $kriteria[$index]->nama_kriteria; ?></td>
+                                                    <td><?= $weight; ?></td>
+                                                </tr>
+                                            <?php endforeach; ?>
+                                        </tbody>
+                                    </table>
                                 <?php endif; ?>
+                            </div>
                         </div>
-                    </div>
-                    <div class="card-body">
-                        <!-- Modal tambah kriteria-->
+
                         <div class="modal fade" id="addRowModal" tabindex="-1" role="dialog" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
@@ -108,6 +123,9 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="page-header">
+                            <h3 class="fw-bold mb-3">Data Kriteria</h3>
+                        </div>
                         <table class="table table-striped mt-3">
                             <thead>
                                 <tr>
@@ -118,21 +136,21 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php 
-                                    $no = 1;
-                                    foreach($kriteria as $k){ 
+                                <?php
+                                $no = 1;
+                                foreach ($kriteria as $k) {
                                 ?>
-                                <tr>
-                                    <td><?php echo $no++; ?></td>
-                                    <td><?php echo $k->nama_kriteria; ?></td>
-                                    <td><?php echo $k->nilai; ?></td>
-                                    <td>
-                                        <div class="form-button-action">
-                                            <button class="btn btn-warning btn-edit" data-id="<?php echo $k->id_kriteria; ?>" data-bs-toggle="modal" data-bs-target="#editRowModal">Edit</button>
-                                            <a href="<?php echo base_url().'dashboard/kriteria_hapus/'.$k->id_kriteria; ?>"><button class="btn btn-danger">Hapus</button></a>
-                                        </div>
-                                    </td>
-                                </tr>
+                                    <tr>
+                                        <td><?php echo $no++; ?></td>
+                                        <td><?php echo $k->nama_kriteria; ?></td>
+                                        <td><?php echo $k->nilai; ?></td>
+                                        <td>
+                                            <div class="form-button-action">
+                                                <button class="btn btn-warning btn-edit" data-id="<?php echo $k->id_kriteria; ?>" data-bs-toggle="modal" data-bs-target="#editRowModal">Edit</button>
+                                                <a href="<?php echo base_url() . 'dashboard/kriteria_hapus/' . $k->id_kriteria; ?>"><button class="btn btn-danger">Hapus</button></a>
+                                            </div>
+                                        </td>
+                                    </tr>
                                 <?php } ?>
                             </tbody>
                         </table>
@@ -140,37 +158,45 @@
                 </div>
             </div>
         </div>
+
+        <script>
+            $(document).ready(function() {
+                $('.btn-edit').on('click', function() {
+                    var id = $(this).data('id');
+
+                    $.ajax({
+                        url: '<?php echo base_url('dashboard/get_kriteria') ?>',
+                        method: 'POST',
+                        data: {
+                            id_kriteria: id
+                        },
+                        dataType: 'json',
+                        success: function(data) {
+                            console.log(data); // Tambahkan ini untuk debugging
+
+                            // Periksa apakah ada error
+                            if (data.error) {
+                                alert(data.error);
+                            } else {
+                                $('#editIdKriteria').val(data.id_kriteria);
+                                // $('#editKode').val(data.kode_kriteria);
+                                $('#editNama').val(data.nama_kriteria);
+                                // $('#editBobot').val(data.nilai);
+                                // $('#editRengking').val(data.rengking);
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            console.error(xhr.responseText); // Log error response
+                        }
+                    });
+                });
+            });
+
+            function editKriteria(id, nama) {
+                $('#editIdKriteria').val(id);
+                $('#editNama').val(nama);
+            }
+        </script>
+
     </div>
 </div>
-<script>
-$(document).ready(function(){
-    $('.btn-edit').on('click', function(){
-        var id = $(this).data('id');
-        
-        $.ajax({
-            url: '<?php echo base_url('dashboard/get_kriteria') ?>',
-            method: 'POST',
-            data: {id_kriteria: id},
-            dataType: 'json',
-            success: function(data){
-                console.log(data); // Tambahkan ini untuk debugging
-
-                // Periksa apakah ada error
-                if (data.error) {
-                    alert(data.error);
-                } else {
-                    $('#editIdKriteria').val(data.id_kriteria);
-                    // $('#editKode').val(data.kode_kriteria);
-                    $('#editNama').val(data.nama_kriteria);
-                    // $('#editBobot').val(data.nilai);
-                    // $('#editRengking').val(data.rengking);
-                }
-            },
-            error: function(xhr, status, error) {
-                console.error(xhr.responseText); // Log error response
-            }
-        });
-    });
-});
-
-</script>
