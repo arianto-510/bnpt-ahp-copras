@@ -125,7 +125,7 @@
                 </div>
                 
                 <div class="mb-3">
-                  <input type="submit" class="btn btn-primary d-grid w-100" type="submit" value="Login">
+                  <input type="submit" class="btn btn-primary d-grid w-100" type="submit" value="Pengumuman">
                 </div>
               </form>
 

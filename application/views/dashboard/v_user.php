@@ -209,10 +209,15 @@ $(document).ready(function(){
                 } else {
                     $('#editPetugas').val(data.id_petugas);
                     $('#editNama').val(data.nama);
+<<<<<<< HEAD
                     $('#editDesaLama').val(data.desa_id);
                     $('#editUsernameLama').val(data.username);
                     $('#editUsername').val(data.username);
                     $('#editPass').val(data.password);
+=======
+                    $('#editUsernameLama').val(data.username);
+                    $('#editUsername').val(data.username);
+>>>>>>> 5c863c13741dda232368d2b5c9ccd6345c9fa5c2
                 }
             },
             error: function(xhr, status, error) {

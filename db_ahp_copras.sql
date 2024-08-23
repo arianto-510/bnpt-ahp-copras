@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 20 Agu 2024 pada 08.32
+-- Waktu pembuatan: 23 Agu 2024 pada 09.33
 -- Versi server: 10.4.19-MariaDB
 -- Versi PHP: 7.4.20
 
@@ -122,21 +122,23 @@ CREATE TABLE `perhitungan` (
   `pendapatan` double NOT NULL,
   `j_tanggungan` double NOT NULL,
   `pendidikan` double NOT NULL,
-  `pekerjaan` double NOT NULL
+  `pekerjaan` double NOT NULL,
+  `status` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `perhitungan`
 --
 
-INSERT INTO `perhitungan` (`id`, `id_alternatif`, `pendapatan`, `j_tanggungan`, `pendidikan`, `pekerjaan`) VALUES
-(15, 9, 1, 2, 2, 1),
-(17, 7, 5, 2, 1, 1),
-(18, 8, 2, 3, 4, 1),
-(19, 10, 3, 1, 1, 2),
-(20, 11, 4, 4, 1, 2),
-(21, 12, 2, 4, 3, 1),
-(22, 13, 3, 1, 1, 2);
+INSERT INTO `perhitungan` (`id`, `id_alternatif`, `pendapatan`, `j_tanggungan`, `pendidikan`, `pekerjaan`, `status`) VALUES
+(15, 9, 1, 2, 2, 1, 1),
+(17, 7, 5, 2, 1, 1, 1),
+(18, 8, 2, 3, 4, 1, 1),
+(19, 10, 3, 1, 1, 2, 1),
+(20, 11, 4, 4, 1, 2, 2),
+(21, 12, 2, 4, 3, 1, 1),
+(22, 13, 3, 1, 1, 2, 1),
+(23, 14, 5, 5, 5, 2, 2);
 
 -- --------------------------------------------------------
 
@@ -159,8 +161,8 @@ CREATE TABLE `petugas` (
 --
 
 INSERT INTO `petugas` (`id_petugas`, `nama`, `desa_id`, `username`, `password`, `status`, `jum_target`) VALUES
-(1, 'very bad', 11, 'very', 'very123', 'petugas', 2),
-(3, 'Hamsah', 0, 'mira', '123456', 'admin', 0),
+(1, 'very bad', 11, 'very', 'very123', 'petugas', 3),
+(3, 'Manusia', 0, 'mira', '123456', 'admin', 4),
 (4, 'Anisah', 9, 'nisa', 'petugas123', 'petugas', 0),
 (5, 'Arianto', 10, 'ari', 'petugas12345', 'petugas', 0);
 
@@ -291,7 +293,7 @@ ALTER TABLE `penilaian`
 -- AUTO_INCREMENT untuk tabel `perhitungan`
 --
 ALTER TABLE `perhitungan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT untuk tabel `petugas`
