@@ -38,7 +38,7 @@
                             <button
                               type="button"
                               class="close"
-                              data-dismiss="modal"
+                              data-bs-dismiss="modal"
                               aria-label="Close"
                             >
                               <span aria-hidden="true">&times;</span>
@@ -86,12 +86,11 @@
                                 <div class="col-md-6 pe-0">
                                   <div class="form-group form-group-default">
                                     <label>Jenis Kelamin</label>
-                                    <input name="jk"
-                                      id="addPosition"
-                                      type="text"
-                                      class="form-control"
-                                      placeholder="Pilih jenis kelamin" required
-                                    />
+                                    <select class="form-select" aria-label="Default select example" name="jk" required>
+                                      <option selected>Jenis Kelamin</option>
+                                      <option value="Laki-laki">Laki-laki</option>
+                                      <option value="Perempuan">Perempuan</option>
+                                    </select>
                                   </div>
                                 </div>
                                 <div class="col-md-6">
@@ -105,6 +104,17 @@
                                     />
                                   </div>
                                 </div>
+                                <?php if($this->session->userdata('level') == "admin") : ?>
+                                <div class="col-sm 12">
+                                  <label for="id_petugas" class="form-label">Desa - Kecamatan</label>
+                                  <select id="id_petugas" class="select2 form-select" name="id_petugas" required>
+                                      <option value="">desa - kecamatan</option>    
+                                      <?php foreach($desa as $d) : ?>                                     
+                                        <option value="<?php echo $d->id_petugas ?>"><?php echo $d->desa.' - '.$d->kecamatan ?></option>                                                           
+                                      <?php endforeach; ?>                                                          
+                                  </select>
+                                </div>
+                                <?php endif; ?>
                               </div>
                               <div class="modal-footer border-0">
                                 <button
@@ -117,7 +127,7 @@
                                 <button
                                   type="button"
                                   class="btn btn-danger"
-                                  data-dismiss="modal"
+                                  data-bs-dismiss="modal"
                                 >
                                   Close
                                 </button>
@@ -138,7 +148,7 @@
                                             <span class="fw-mediumbold">Edit</span>
                                             <span class="fw-light">Data Alternatif</span>
                                         </h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
@@ -167,7 +177,11 @@
                                                 <div class="col-sm-12">
                                                     <div class="form-group form-group-default">
                                                         <label>Jenis Kelamin</label>
-                                                        <input name="jk" id="editJk" type="text" class="form-control" required />
+                                                        <select class="form-select" aria-label="Default select example" name="jk" id="editJk">
+                                                          <option selected>Jenis Kelamin</option>
+                                                          <option value="Laki-laki">Laki-laki</option>
+                                                          <option value="Perempuan">Perempuan</option>
+                                                        </select>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-12">
@@ -176,10 +190,22 @@
                                                         <input name="alamat" id="editAlamat" type="text" class="form-control" required />
                                                     </div>
                                                 </div>
+                                                <?php if($this->session->userdata('level') == "admin") : ?>
+                                                <div class="col-sm 12">
+                                                  <label for="id_petugas" class="form-label">Desa - Kecamatan</label>
+                                                  <select class="select2 form-select" name="id_petugas" id="editDesa2">
+                                                      <option value="">desa - kecamatan</option>    
+                                                      <?php foreach($desa as $d) : ?>                                     
+                                                        <option value="<?php echo $d->id_petugas ?>"><?php echo $d->desa.' - '.$d->kecamatan ?></option>                                                           
+                                                      <?php endforeach; ?>                                                          
+                                                  </select>
+                                                </div>
+                                                <?php endif; ?>
+                                                
                                             </div>
                                             <div class="modal-footer border-0">
                                                 <button type="submit" id="editRowButton" class="btn btn-primary">Update</button>
-                                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
                                             </div>
                                         </form>
                                     </div>
@@ -211,7 +237,7 @@
                         ?>
 
                           <tr>
-                            <td><?php echo $d->nama; ?></td>
+                            <td><?php echo $d->nama_warga; ?></td>
                             <td><?php echo $d->nik; ?></td>
                             <td><?php echo $d->telepon; ?></td>
                             <td><?php echo $d->jenis_kelamin; ?></td>
@@ -223,7 +249,13 @@
                               </div>
                             </td>
                           </tr>
+
                           <?php } ?>
+                          <?php if(empty($alternatif)) : ?> 
+                            <tr>
+                              <td colspan="6" class="text-center text-info"><i>-- Data Kosong --</i></td>
+                            </tr>
+                          <?php endif;?> 
                         </tbody>
                       </table>
                     </div>
@@ -251,11 +283,13 @@ $(document).ready(function(){
                     alert(data.error);
                 } else {
                   $('#editIdAlternatif').val(data.id_alternatif);
-                    $('#editNama').val(data.nama);
+                    $('#editNama').val(data.nama_warga);
                     $('#editNik').val(data.nik);
                     $('#editTelepon').val(data.telepon);
                     $('#editJk').val(data.jenis_kelamin);
                     $('#editAlamat').val(data.alamat);
+                    $('#editDesa2').val(data.id_petugas);
+                    $('#edit2').val(data.id_petugas);
                 }
             },
             error: function(xhr, status, error) {

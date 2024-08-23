@@ -1,7 +1,7 @@
 <div class="container">
     <div class="page-inner">
         <div class="page-header">
-            <h3 class="fw-bold mb-3">Data Petugas</h3>
+            <h3 class="fw-bold mb-3">Data Desa</h3>
         </div>
         <div class="row">
             <div class="col-md-12">
@@ -9,7 +9,7 @@
                     <div class="card-header">
                         <div class="d-flex align-items-center">
                             <button class="btn btn-primary btn-round ms-auto" data-bs-toggle="modal" data-bs-target="#addRowModal">
-                                <i class="fa fa-plus"></i> Tambah Petugas
+                                <i class="fa fa-plus"></i> Tambah Desa
                             </button>
                         </div>
                     </div>
@@ -18,17 +18,12 @@
                         if(isset($_GET['alert'])){
                             if($_GET['alert']=="sudah_ada"){
                                 echo "<div class='alert alert-danger alert-dismissible' role='alert'>
-                                        Maaf! Username, Sudah ada !
+                                        Maaf! Desa, Sudah ada di kecamatan tersebut!
                                         <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
                                     </div>";
-                            }if($_GET['alert']=="desa_ada"){
+                            }elseif($_GET['alert']=="sudah_ada2"){
                                 echo "<div class='alert alert-danger alert-dismissible' role='alert'>
-                                        Maaf! Desa di kecamatan tersebut sudah ditugaskan oleh orang lain, Sudah ada !
-                                        <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
-                                    </div>";
-                            }elseif($_GET['alert']=="username"){
-                                echo "<div class='alert alert-danger alert-dismissible' role='alert'>
-                                        Maaf ! Username sudah ada !
+                                        Maaf! Desa, Sudah ada di kecamatan tersebut!
                                         <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
                                     </div>";
                             }elseif($_GET['alert']=="tambah"){
@@ -56,33 +51,30 @@
                                     <div class="modal-header border-0">
                                         <h5 class="modal-title">
                                             <span class="fw-mediumbold">Tambah</span>
-                                            <span class="fw-light">Petugas</span>
+                                            <span class="fw-light">Desa</span>
                                         </h5>
                                         <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <form action="<?php echo base_url('user/tambah_petugas') ?>" method="post">
+                                        <form action="<?php echo base_url('tugas/tambah_desa') ?>" method="post">
                                             <div class="row">
                                                 <div class="col-sm-12">
                                                     <div class="form-group form-group-default">
-                                                        <label>Nama</label>
-                                                        <input name="nama" id="addNama" type="text" class="form-control" placeholder="Masukkan nama" required />
+                                                        <label>Desa</label>
+                                                        <input name="desa" id="addDesa" type="text" class="form-control" placeholder="Masukkan desa" required />
                                                     </div>
                                                 </div>
-                                                <div class="col-sm-12">
-                                                    <div class="form-group form-group-default">
-                                                        <label>Username</label>
-                                                        <input name="username" id="addUsername" type="text" class="form-control" placeholder="Masukkan username" required />
-                                                    </div>
-                                                </div>
+
+                                            </div>
+                                            <div class="row">
                                                 <div class="col-sm 12">
-                                                    <label for="desa" class="form-label">Desa - Kecamatan</label>
-                                                    <select id="desa" class="select2 form-select" name="desa_id" required>
-                                                        <option value="">desa - kecamatan</option>    
-                                                        <?php foreach($desa as $d) : ?>                                     
-                                                        <option value="<?php echo $d->desa_id ?>"><?php echo $d->desa.' - '.$d->kecamatan ?></option>                                                           
+                                                    <label for="kecamatan" class="form-label">Kecamatan</label>
+                                                    <select id="kecamatan" class="select2 form-select" name="kecamatan" required>
+                                                        <option selected>Kecamatan</option>    
+                                                        <?php foreach($kecamatan as $k) : ?>                                     
+                                                        <option value="<?php echo $k->kecamatan_id ?>"><?php echo $k->kecamatan ?></option>                                                           
                                                         <?php endforeach; ?>                                                          
                                                     </select>
                                                 </div>
@@ -103,44 +95,35 @@
                                     <div class="modal-header border-0">
                                         <h5 class="modal-title">
                                             <span class="fw-mediumbold">Edit</span>
-                                            <span class="fw-light">Kriteria</span>
+                                            <span class="fw-light">Desa</span>
                                         </h5>
                                         <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <form action="<?php echo base_url('user/update_petugas') ?>" method="post">
-                                            <input type="hidden" name="id_petugas" id="editPetugas">
-                                            <input type="hidden" name="username_lama" id="editUsernameLama">
+                                        <form action="<?php echo base_url('tugas/update_desa') ?>" method="post">
+                                            <input type="hidden" name="desa_id" id="editDesaId">
                                             <input type="hidden" name="desa_lama" id="editDesaLama">
+                                            
                                             <div class="row">
                                                 <div class="col-sm-12">
                                                         <div class="form-group form-group-default">
-                                                            <label>Nama</label>
-                                                            <input name="nama" id="editNama" type="text" class="form-control" required />
+                                                            <label>Desa</label>
+                                                            <input name="desa" id="editDesa" type="text" class="form-control" required />
                                                         </div>
                                                 </div>
+                                            </div>
+                                            <div class="row">
                                                 <div class="col-sm 12">
-                                                    <label for="desa" class="form-label">Desa - Kecamatan</label>
-                                                    <select id="desa" class="select2 form-select" name="desa_id" required>
-                                                        <option value="">desa - kecamatan</option>    
-                                                        <?php foreach($desa as $d) : ?>                                     
-                                                        <option value="<?php echo $d->desa_id ?>"><?php echo $d->desa.' - '.$d->kecamatan ?></option>                                                           
+                                                    <input type="text" hidden name="idKec_lama" id="idKec_lama">
+                                                    <label for="kecamatan" class="form-label">Kecamatan</label>
+                                                    <select id="editKecamatan2" class="select2 form-select" name="kecamatan" required>
+                                                        <option value="">Kecamatan</option>    
+                                                        <?php foreach($kecamatan as $k) : ?>                                     
+                                                            <option value="<?php echo $k->kecamatan_id ?>"><?php echo $k->kecamatan ?></option>                                                           
                                                         <?php endforeach; ?>                                                          
                                                     </select>
-                                                </div>
-                                                <div class="col-sm-12">
-                                                        <div class="form-group form-group-default">
-                                                            <label>Username</label>
-                                                            <input name="username" id="editUsername" type="text" class="form-control" required />
-                                                        </div>
-                                                </div>
-                                                <div class="col-sm-12">
-                                                        <div class="form-group form-group-default">
-                                                            <label>Password</label>
-                                                            <input name="pass" id="editPass" type="text" class="form-control" required />
-                                                        </div>
                                                 </div>
                                             </div>
                                             <div class="modal-footer border-0">
@@ -156,7 +139,6 @@
                             <thead>
                                 <tr>
                                     <th scope="col">No</th>
-                                    <th scope="col">Nama</th>
                                     <th scope="col">Desa</th>
                                     <th scope="col">Kecamatan</th>
                                     <th style="width: 10%">Aksi</th>
@@ -165,17 +147,16 @@
                             <tbody>
                                 <?php 
                                     $no = 1;
-                                    foreach($petugas as $p){ 
+                                    foreach($desa as $d){ 
                                 ?>
                                 <tr>
                                     <td><?php echo $no++; ?></td>
-                                    <td><?php echo $p->nama; ?></td>
-                                    <td><?php echo $p->desa; ?></td>
-                                    <td><?php echo $p->kecamatan; ?></td>
+                                    <td><?php echo $d->desa; ?></td>
+                                    <td><?php echo $d->kecamatan; ?></td>
                                     <td>
                                         <div class="form-button-action">
-                                            <button class="btn btn-warning btn-edit" data-id="<?php echo $p->id_petugas; ?>" data-bs-toggle="modal" data-bs-target="#editRowModal">Edit</button>
-                                            <a href="<?php echo base_url().'user/petugas_hapus/'.$p->id_petugas; ?>"><button class="btn btn-danger">Hapus</button></a>
+                                            <button class="btn btn-warning btn-edit" data-id="<?php echo $d->desa_id; ?>" data-bs-toggle="modal" data-bs-target="#editRowModal">Edit</button>
+                                            <a href="<?php echo base_url().'tugas/desa_hapus/'.$d->desa_id; ?>"><button class="btn btn-danger">Hapus</button></a>
                                         </div>
                                     </td>
                                 </tr>
@@ -196,9 +177,9 @@ $(document).ready(function(){
         var id = $(this).data('id');
         
         $.ajax({
-            url: '<?php echo base_url('user/get_petugas') ?>',
+            url: '<?php echo base_url('tugas/get_desa') ?>',
             method: 'POST',
-            data: {id_petugas: id},
+            data: {desa_id: id},
             dataType: 'json',
             success: function(data){
                 console.log(data); // Tambahkan ini untuk debugging
@@ -207,12 +188,11 @@ $(document).ready(function(){
                 if (data.error) {
                     alert(data.error);
                 } else {
-                    $('#editPetugas').val(data.id_petugas);
-                    $('#editNama').val(data.nama);
-                    $('#editDesaLama').val(data.desa_id);
-                    $('#editUsernameLama').val(data.username);
-                    $('#editUsername').val(data.username);
-                    $('#editPass').val(data.password);
+                    $('#editDesaId').val(data.desa_id);               
+                    $('#editDesa').val(data.desa);
+                    $('#editDesaLama').val(data.desa);
+                    $('#idKec_lama').val(data.kecamatan_id);
+                    $('#editKecamatan2').val(data.kecamatan_id);
                 }
             },
             error: function(xhr, status, error) {

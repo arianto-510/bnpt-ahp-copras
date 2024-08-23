@@ -138,9 +138,6 @@ class Ahpcopras extends CI_Controller
         // var_dump($akhr);
         // die();
 
-
-        $this->load->view('dashboard/v_header');
-        $this->load->view('dashboard/v_data_hasil_akhir', $data);
-        $this->load->view('dashboard/v_footer');
+        return $data;
     }
 }

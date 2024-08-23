@@ -80,36 +80,61 @@
               </span>
               <h4 class="text-section">MASTER DATA</h4>
             </li>
+            <?php 
+            //cek jika yang login adalah admin
+            if($this->session->userdata('level') == "admin") : ?>
+            <li class="nav-item">
+              <a href="<?php echo base_url() . 'tugas' ?>">
+                <i class="fas fa-layer-group"></i>
+                <p>Data Kecamatan</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="<?php echo base_url() . 'tugas/desa' ?>">
+                <i class="fas fa-layer-group"></i>
+                <p>Data Desa</p>
+              </a>
+            </li>
+            <?php endif; ?>
             <li class="nav-item">
               <a href="<?php echo base_url() . 'dashboard/data_alternatif' ?>">
                 <i class="fas fa-layer-group"></i>
                 <p>Data Alternatif</p>
               </a>
             </li>
+            <?php if($this->session->userdata('level') == "admin") : ?>
             <li class="nav-item">
               <a href="<?php echo base_url() . 'dashboard/data_kriteria' ?>">
                 <i class="fas fa-th-list"></i>
                 <p>Data Kriteria</p>
               </a>
             </li>
+            <?php endif; ?>
+            
             <li class="nav-item">
               <a href="<?php echo base_url() . 'dashboard/data_penilaian' ?>">
                 <i class="fas fa-th-list"></i>
                 <p>Data Penilaian</p>
               </a>
             </li>
+            
             <li class="nav-item">
+              <a href="<?php echo base_url() . 'dashboard/data_hasil_akhir' ?>">
+                <i class="fas fa-th-list"></i>
+                <p>Data Perhitungan</p>
+              </a>
+            </li>
+            
+            <!-- <li class="nav-item">
               <a data-bs-toggle="collapse" href="#forms">
                 <i class="fas fa-pen-square"></i>
                 <p>Data Perhitungan</p>
               </a>
-            </li>
-            <li class="nav-item">
-              <a data-bs-toggle="collapse" href="<?= base_url() . 'ahpcopras/data_hasil_akhir'; ?>">
-                <i class="fas fa-table"></i>
-                <p>Data Hasil Akhir</p>
-              </a>
-            </li>
+            </li> -->
+            <?php 
+              //cek jika yang login adalah admin
+              if($this->session->userdata('level') == "admin") :
+            ?>
             <li class="nav-section">
               <span class="sidebar-mini-icon">
                 <i class="fa fa-ellipsis-h"></i>
@@ -122,6 +147,7 @@
                 <p>Data User</p>
               </a>
             </li>
+            <?php endif; ?>
           </ul>
         </div>
       </div>
@@ -153,7 +179,7 @@
         <!-- Navbar Header -->
         <nav class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom">
           <div class="container-fluid">
-            <h2 class="text-center">SPK PENERIMA PBNT</h2>
+            <h2 class="text-center">SPK PENERIMA BPNT</h2>
 
             <ul class="navbar-nav topbar-nav ms-md-auto align-items-center">
 
@@ -165,7 +191,7 @@
                   </div>
                   <span class="profile-username">
                     <span class="op-7">Hi,</span>
-                    <span class="fw-bold">Administrator</span>
+                    <span class="fw-bold"><?php echo $this->session->userdata('nama') ?> </span>
                   </span>
                 </a>
                 <ul class="dropdown-menu dropdown-user animated fadeIn">
@@ -176,9 +202,9 @@
                           <img src="<?php echo base_url(); ?>assets/assets/img/profile.jpg" alt="image profile" class="avatar-img rounded" />
                         </div>
                         <div class="u-text">
-                          <h4>Admin</h4>
+                          <h4><?php echo $this->session->userdata('level') ?></h4>
                           <p class="text-muted">admin@mtc.com</p>
-                          <a href="profile.html" class="btn btn-xs btn-secondary btn-sm">View Profile</a>
+                          <a href="<?php echo base_url() . 'dashboard/profil' ?>" class="btn btn-xs btn-secondary btn-sm">View Profile</a>
                         </div>
                       </div>
                     </li>

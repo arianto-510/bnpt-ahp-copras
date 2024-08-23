@@ -57,10 +57,10 @@
 <script src="<?php echo base_url(); ?>assets/assets/js/plugin/jsvectormap/world.js"></script>
 
 <!-- Sweet Alert -->
-<!-- <script src="<?php echo base_url(); ?>assets/assets/js/plugin/sweetalert/sweetalert.min.js"></script> -->
+<script src="<?php echo base_url(); ?>assets/assets/js/plugin/sweetalert/sweetalert.min.js"></script>
 
 <!-- Kaiadmin JS -->
-<!-- <script src="<?php echo base_url(); ?>assets/assets/js/kaiadmin.min.js"></script> -->
+<script src="<?php echo base_url(); ?>assets/assets/js/kaiadmin.min.js"></script>
 
 <!-- Kaiadmin DEMO methods, don't include it in your project! -->
 <!-- <script src="<?php echo base_url(); ?>assets/assets/js/setting-demo.js"></script>

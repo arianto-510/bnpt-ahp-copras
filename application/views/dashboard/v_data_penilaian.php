@@ -9,10 +9,12 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="d-flex align-items-center">
+                            <?php if($this->session->userdata('level') == 'admin') : ?>
                             <button class="btn btn-primary btn-round ms-auto" data-bs-toggle="modal" data-bs-target="#addRowModal">
                                 <i class="fa fa-plus"></i>
                                 Tambah Data Penilaian
                             </button>
+                            <?php endif; ?>
                         </div>
                     </div>
                     <div class="card-body">
@@ -25,13 +27,13 @@
                                             <span class="fw-mediumbold"> Penilaian</span>
                                             <span class="fw-light"> Baru </span>
                                         </h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
                                     <div class="modal-body">
                                         <p class="small">
-                                            Tambah data Penilaian
+               -                             Tambah data Penilaian
                                         </p>
                                         <form class="" action="<?php echo base_url('dashboard/tambah_penilaian') ?>" method="post">
                                             <div class="row">
@@ -41,7 +43,7 @@
                                                         <select class="form-select" aria-label="Default select example" name="nama" id="nama">
                                                             <option selected>Pilih nama</option>
                                                             <?php foreach ($alternatif as $a) : ?>
-                                                                <option value="<?php echo $a->id_alternatif; ?>"><?php echo $a->nama; ?></option>
+                                                                <option value="<?php echo $a->id_alternatif; ?>"><?php echo $a->nama_warga; ?></option>
                                                             <?php endforeach; ?>
                                                         </select>
                                                         <!-- <input name="nama" id="addName" type="text" class="form-control" placeholder="Masukkan nama" required /> -->
@@ -127,7 +129,7 @@
                                             <span class="fw-mediumbold">Edit</span>
                                             <span class="fw-light">Data Penilaian</span>
                                         </h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
@@ -214,18 +216,21 @@
                                         <th>Jumlah Tanggungan</th>
                                         <th>Pendidikan</th>
                                         <th>Pekerjaan</th>
-                                        <th style="width: 10%">Aksi</th>
+                                        <?php if($this->session->userdata('level') == 'admin') : ?>
+                                            <th style="width: 10%">Aksi</th>
+                                        <?php endif; ?>
                                     </tr>
                                 </thead>
 
                                 <tbody>
                                     <?php foreach ($perhitungan as $p) : ?>
                                         <tr>
-                                            <td><?php echo $p->nama; ?></td>
+                                            <td><?php echo $p->nama_warga; ?></td>
                                             <td><?php echo $p->pendapatan; ?></td>
                                             <td><?php echo $p->j_tanggungan; ?></td>
                                             <td><?php echo $p->pendidikan; ?></td>
                                             <td><?php echo $p->pekerjaan; ?></td>
+                                            <?php if($this->session->userdata('level') == 'admin') : ?>
                                             <td>
                                                 <div class="form-button-action">
                                                     <button class="btn btn-warning btn-edit" data-id="<?php echo $p->id; ?>" data-bs-toggle="modal" data-bs-target="#editRowModal">Edit</button>
@@ -234,8 +239,14 @@
                                                     </a>
                                                 </div>
                                             </td>
+                                            <?php endif; ?>
                                         </tr>
                                     <?php endforeach; ?>
+                                    <?php if(empty($perhitungan)) : ?> 
+                                        <tr>
+                                        <td colspan="6" class="text-center text-info"><i>-- Data Kosong --</i></td>
+                                        </tr>
+                                    <?php endif;?> 
                                 </tbody>
                             </table>
                         </div>
@@ -263,7 +274,7 @@
                     } else {
                         $('#editIdPerhitungan').val(data.id);
                         $('#editIdAlternatif').val(data.id_alternatif);
-                        $('#editNama').val(data.nama); // Set nama to the readonly input
+                        $('#editNama').val(data.nama_warga); // Set nama to the readonly input
                         $('#editPendapatan').val(data.pendapatan);
                         $('#editTanggungan').val(data.j_tanggungan);
                         $('#editPendidikan').val(data.pendidikan);
